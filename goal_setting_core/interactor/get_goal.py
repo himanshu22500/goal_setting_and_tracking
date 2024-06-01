@@ -23,7 +23,7 @@ class GetGoalInteractor:
         self, session_token: str, goal_id: str, presenter: PresenterInterface
     ):
         try:
-            goal_dto = self.get_single_goal(
+            goal_dto = self.get_goal(
                 session_token=session_token, goal_id=goal_id
             )
             return presenter.get_goal_http_response(goal_dto=goal_dto)
@@ -32,7 +32,7 @@ class GetGoalInteractor:
         except InvalidGoalId:
             return presenter.get_goal_not_found_http_error(goal_id=goal_id)
 
-    def get_single_goal(self, session_token: str, goal_id: str):
+    def get_goal(self, session_token: str, goal_id: str):
         user_id = self.account_service.get_user_id(session_token=session_token)
         # todo : add cross account_goal validation
         return self.goal_storage.get_goal(goal_id=goal_id)

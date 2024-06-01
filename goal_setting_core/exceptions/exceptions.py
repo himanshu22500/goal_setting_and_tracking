@@ -27,3 +27,9 @@ class InvalidAccessToken(Exception):
 class InvalidGoalId(Exception):
     def __init__(self, goal_id: str):
         self.goal_id = goal_id
+
+
+class GoalDoseNotBelongToUser(Exception):
+    def __init__(self, goal_id: str, user_id: str):
+        self.goal_id = goal_id
+        self.user_id = user_id

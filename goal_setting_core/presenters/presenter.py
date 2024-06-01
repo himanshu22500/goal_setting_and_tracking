@@ -105,9 +105,29 @@ class Presenter(PresenterInterface):
     def get_goal_not_found_http_error(self, goal_id: str):
         response_dict = {
             "error": "goal_id doesn't exists",
-            "category": goal_id,
+            "goal_id": goal_id,
         }
         response_json = json.dumps(response_dict)
         return HttpResponse(
             response_json, content_type="application/json", status=400
+        )
+
+    def get_goal_deleted_http_response(self, goal_id: str):
+        response_dict = {
+            "message": "goal deleted successfully",
+            "goal_id": goal_id,
+        }
+        response_json = json.dumps(response_dict)
+        return HttpResponse(
+            response_json, content_type="application/json", status=400
+        )
+
+    def get_invalid_access_token_http_error(self):
+        response_dict = {"error": "invalid or expired access token"}
+
+        response_json = json.dumps(response_dict)
+        return HttpResponse(
+            response_json,
+            content_type="application/json",
+            status=status.HTTP_401_UNAUTHORIZED,
         )

@@ -60,3 +60,10 @@ class GoalStorage(GoalStorageInterface):
             return self._get_goal_dto(goal=goal)
         except ObjectDoesNotExist:
             raise InvalidGoalId(goal_id=goal_id)
+
+    def delete_goal(self, goal_id: str):
+        try:
+            goal = Goal.objects.get(id=goal_id)
+            goal.delete()
+        except ObjectDoesNotExist:
+            raise InvalidGoalId(goal_id=goal_id)

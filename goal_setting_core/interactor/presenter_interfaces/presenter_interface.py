@@ -39,3 +39,11 @@ class PresenterInterface:
     @abstractmethod
     def get_goal_not_found_http_error(self, goal_id: str):
         pass
+
+    @abstractmethod
+    def get_goal_deleted_http_response(self, goal_id: str):
+        pass
+
+    @abstractmethod
+    def get_invalid_access_token_http_error(self):
+        pass

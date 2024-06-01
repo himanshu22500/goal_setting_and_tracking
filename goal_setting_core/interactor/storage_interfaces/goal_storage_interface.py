@@ -23,3 +23,7 @@ class GoalStorageInterface:
     @abstractmethod
     def get_goal(self, goal_id: str):
         pass
+
+    @abstractmethod
+    def delete_goal(self, goal_id: str):
+        pass
