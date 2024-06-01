@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from accounts.models.user_profile import SessionToken, UserProfile
+
+admin.site.register(UserProfile)
+admin.site.register(SessionToken)
