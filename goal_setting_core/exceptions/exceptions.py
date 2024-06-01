@@ -17,3 +17,13 @@ class TargetDateMustBeInFuture(Exception):
 class DueDateMustBeInFuture(Exception):
     def __init__(self, due_datetime: datetime):
         self.due_datetime = due_datetime
+
+
+class InvalidAccessToken(Exception):
+    def __init__(self, access_token: str):
+        self.access_token = access_token
+
+
+class InvalidGoalId(Exception):
+    def __init__(self, goal_id: str):
+        self.goal_id = goal_id

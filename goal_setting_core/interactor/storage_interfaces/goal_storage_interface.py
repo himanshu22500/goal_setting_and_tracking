@@ -1,6 +1,8 @@
 from abc import abstractmethod
+from typing import List
 
 from accounts.dtos import CreateGoalParamsDTO
+from goal_setting_core.interactor.storage_interfaces.dtos import GoalDTO
 
 
 class GoalStorageInterface:
@@ -10,5 +12,14 @@ class GoalStorageInterface:
     ):
         pass
 
+    @abstractmethod
     def is_category_exists(self, category: str):
+        pass
+
+    @abstractmethod
+    def get_user_goals(self, user_id: int) -> List[GoalDTO]:
+        pass
+
+    @abstractmethod
+    def get_goal(self, goal_id: str):
         pass

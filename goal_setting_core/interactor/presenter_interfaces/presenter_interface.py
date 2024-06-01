@@ -1,5 +1,6 @@
 from abc import abstractmethod
 from datetime import datetime
+from typing import List
 
 from goal_setting_core.interactor.storage_interfaces.dtos import GoalDTO
 
@@ -25,4 +26,16 @@ class PresenterInterface:
 
     @abstractmethod
     def get_goal_created_http_response(self, goal_dto: GoalDTO):
+        pass
+
+    @abstractmethod
+    def get_user_goals_http_response(self, goal_dtos: List[GoalDTO]):
+        pass
+
+    @abstractmethod
+    def get_goal_http_response(self, goal_dto: GoalDTO):
+        pass
+
+    @abstractmethod
+    def get_goal_not_found_http_error(self, goal_id: str):
         pass

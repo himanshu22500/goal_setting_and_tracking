@@ -1,7 +1,9 @@
 import json
 from datetime import datetime
+from typing import List
 
 from django.http import HttpResponse
+from rest_framework import status
 
 from goal_setting_core.interactor.presenter_interfaces.presenter_interface import (
     PresenterInterface,
@@ -49,8 +51,8 @@ class Presenter(PresenterInterface):
             response_json, content_type="application/json", status=400
         )
 
-    def get_goal_created_http_response(self, goal_dto: GoalDTO):
-        goal_dict = {
+    def _get_goal_dict(self, goal_dto):
+        return {
             "id": goal_dto.id,
             "title": goal_dto.title,
             "description": goal_dto.description,
@@ -62,9 +64,48 @@ class Presenter(PresenterInterface):
             "is_public": goal_dto.is_public,
         }
 
+    def _get_goal_dicts(self, goal_dtos: List[GoalDTO]):
+        return [self._get_goal_dict(goal_dto=dto) for dto in goal_dtos]
+
+    def get_goal_created_http_response(self, goal_dto: GoalDTO):
+        goal_dict = self._get_goal_dict(goal_dto=goal_dto)
+
         response_dict = {
             "message": "goal created successfully",
             "data": goal_dict,
+        }
+        response_json = json.dumps(response_dict)
+        return HttpResponse(
+            response_json, content_type="application/json", status=400
+        )
+
+    def get_user_goals_http_response(self, goal_dtos: List[GoalDTO]):
+        goal_dicts = self._get_goal_dicts(goal_dtos=goal_dtos)
+        response_dict = {
+            "data": goal_dicts,
+        }
+        response_json = json.dumps(response_dict)
+        return HttpResponse(
+            response_json, content_type="application/json", status=200
+        )
+
+    def get_goal_http_response(self, goal_dto: GoalDTO):
+        goal_dict = self._get_goal_dict(goal_dto=goal_dto)
+
+        response_dict = {
+            "data": goal_dict,
+        }
+        response_json = json.dumps(response_dict)
+        return HttpResponse(
+            response_json,
+            content_type="application/json",
+            status=status.HTTP_200_OK,
+        )
+
+    def get_goal_not_found_http_error(self, goal_id: str):
+        response_dict = {
+            "error": "goal_id doesn't exists",
+            "category": goal_id,
         }
         response_json = json.dumps(response_dict)
         return HttpResponse(

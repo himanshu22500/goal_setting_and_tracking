@@ -1,4 +1,9 @@
+from typing import List
+
+from django.core.exceptions import ObjectDoesNotExist
+
 from accounts.dtos import CreateGoalParamsDTO
+from goal_setting_core.exceptions.exceptions import InvalidGoalId
 from goal_setting_core.interactor.storage_interfaces.dtos import GoalDTO
 from goal_setting_core.interactor.storage_interfaces.goal_storage_interface import (
     GoalStorageInterface,
@@ -40,3 +45,18 @@ class GoalStorage(GoalStorageInterface):
             priority=goal.priority,
             is_public=goal.is_public,
         )
+
+    def get_user_goals(self, user_id: int) -> List[GoalDTO]:
+        goal_objs = Goal.objects.filter(user__id=user_id)
+
+        return self._get_goal_dtos(goal_objs=goal_objs)
+
+    def _get_goal_dtos(self, goal_objs):
+        return [self._get_goal_dto(goal=obj) for obj in goal_objs]
+
+    def get_goal(self, goal_id: str):
+        try:
+            goal = Goal.objects.get(id=goal_id)
+            return self._get_goal_dto(goal=goal)
+        except ObjectDoesNotExist:
+            raise InvalidGoalId(goal_id=goal_id)
