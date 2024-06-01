@@ -7,3 +7,8 @@ class AccountService:
 
     def get_user_id(self, session_token: str) -> int:
         return self.interface.get_user_id(session_token=session_token)
+
+    def is_session_token_valid(self, session_token: str) -> bool:
+        return self.interface.is_session_token_valid(
+            session_token=session_token
+        )

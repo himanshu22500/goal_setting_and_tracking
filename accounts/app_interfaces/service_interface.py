@@ -9,7 +9,7 @@ class ServiceInterface:
 
         return interactor.get_user_id(session_token=session_token)
 
-    def is_access_token_valid(self, session_token: str) -> bool:
+    def is_session_token_valid(self, session_token: str) -> bool:
         from accounts.interactor.validate_session_token import (
             ValidateSessionTokenInteractor,
         )

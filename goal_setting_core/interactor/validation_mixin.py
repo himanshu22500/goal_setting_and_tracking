@@ -1,3 +1,4 @@
+from goal_setting_core.adapters.service_adapter import ServiceAdapter
 from goal_setting_core.exceptions.exceptions import GoalDoseNotBelongToUser
 from goal_setting_core.interactor.storage_interfaces.goal_storage_interface import (
     GoalStorageInterface,

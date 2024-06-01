@@ -7,6 +7,7 @@ from goal_setting_core.adapters.service_adapter import ServiceAdapter
 from goal_setting_core.exceptions.exceptions import (
     CategoryDoesNotExist,
     DueDateMustBeInFuture,
+    InvalidSessionToken,
     TargetDateMustBeInFuture,
     TitleMustNotBeEmpty,
 )
@@ -50,8 +51,13 @@ class CreateGoalInteractor:
             return presenter.get_invalid_due_datetime_http_error(
                 due_datetime=create_goal_parameter_dto.target_datetime
             )
+        except InvalidSessionToken:
+            return presenter.get_invalid_access_token_http_error()
 
     def create_goal(self, create_goal_parameter_dto: CreateGoalParamsDTO):
+        self.validate_session_token(
+            session_token=create_goal_parameter_dto.session_token
+        )
         self.validate_creation_parameter(
             create_goal_parameter_dto=create_goal_parameter_dto
         )
@@ -91,3 +97,11 @@ class CreateGoalInteractor:
     def validate_due_date(self, due_datetime):
         if due_datetime <= datetime.now():
             raise DueDateMustBeInFuture(due_datetime=due_datetime)
+
+    def validate_session_token(self, session_token: str):
+        is_valid = self.account_service.is_session_token_valid(
+            session_token=session_token
+        )
+
+        if not is_valid:
+            raise InvalidSessionToken(session_token=session_token)

@@ -49,7 +49,10 @@ class AccountStorage(AccountStorageInterface):
         session_token_obj.save()
 
     def is_session_token_valid(self, session_token: str):
-        return SessionToken.objects.filter(token=session_token).exists()
+        current_time = datetime.now()
+        return SessionToken.objects.filter(
+            token=session_token, expiry_date__gt=current_time
+        ).exists()
 
     def delete_session_token(self, session_token: str):
         session_token_obj = SessionToken.objects.filter(token=session_token)

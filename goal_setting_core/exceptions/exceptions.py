@@ -19,9 +19,9 @@ class DueDateMustBeInFuture(Exception):
         self.due_datetime = due_datetime
 
 
-class InvalidAccessToken(Exception):
-    def __init__(self, access_token: str):
-        self.access_token = access_token
+class InvalidSessionToken(Exception):
+    def __init__(self, session_token: str):
+        self.access_token = session_token
 
 
 class InvalidGoalId(Exception):
