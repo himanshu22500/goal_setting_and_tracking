@@ -1,6 +1,7 @@
 from accounts.dtos import UpdateGoalParamsDTO
 from goal_setting_core.adapters.service_adapter import ServiceAdapter
 from goal_setting_core.exceptions.exceptions import (
+    CategoryDoesNotExist,
     GoalDoseNotBelongToUser,
     InvalidGoalId,
     InvalidSessionToken,
@@ -42,6 +43,10 @@ class UpdateGoalInteractor(ValidationMixin):
             return presenter.get_goal_not_found_http_error(goal_id=goal_id)
         except InvalidSessionToken:
             return presenter.get_invalid_access_token_http_error()
+        except CategoryDoesNotExist:
+            return presenter.get_invalid_category_http_error(
+                category=update_goal_params_dto.category
+            )
 
     def update_goal(
         self,

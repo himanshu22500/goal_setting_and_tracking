@@ -2,7 +2,8 @@ from datetime import datetime
 
 
 class CategoryDoesNotExist(Exception):
-    pass
+    def __init__(self, category: str):
+        self.category = category
 
 
 class TitleMustNotBeEmpty(Exception):

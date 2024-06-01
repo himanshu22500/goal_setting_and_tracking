@@ -88,7 +88,7 @@ class CreateGoalInteractor:
             category=category
         )
         if not is_valid_category:
-            raise CategoryDoesNotExist()
+            raise CategoryDoesNotExist(category=category)
 
     def validate_target_date(self, target_datetime):
         if target_datetime <= datetime.now():

@@ -3,7 +3,10 @@ from typing import List
 from django.core.exceptions import ObjectDoesNotExist
 
 from accounts.dtos import CreateGoalParamsDTO, UpdateGoalParamsDTO
-from goal_setting_core.exceptions.exceptions import InvalidGoalId
+from goal_setting_core.exceptions.exceptions import (
+    CategoryDoesNotExist,
+    InvalidGoalId,
+)
 from goal_setting_core.interactor.storage_interfaces.dtos import GoalDTO
 from goal_setting_core.interactor.storage_interfaces.goal_storage_interface import (
     GoalStorageInterface,
@@ -86,7 +89,15 @@ class GoalStorage(GoalStorageInterface):
             goal.due_datetime = update_goal_params_dto.due_datetime
 
         if update_goal_params_dto.category:
-            goal.category = update_goal_params_dto.category
+            try:
+                category = Category.objects.get(
+                    name=update_goal_params_dto.category
+                )
+            except ObjectDoesNotExist:
+                raise CategoryDoesNotExist(
+                    category=update_goal_params_dto.category
+                )
+            goal.category = category
 
         if update_goal_params_dto.completed:
             goal.completed = update_goal_params_dto.completed
@@ -105,6 +116,7 @@ class GoalStorage(GoalStorageInterface):
                 goal_id=goal_id, update_text=update_goal_params_dto.update_text
             )
 
+        goal.save()
         return self._get_goal_dto(goal=goal)
 
     def create_or_update_goal_update_text(
