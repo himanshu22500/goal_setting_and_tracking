@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -13,6 +15,7 @@ class Category(models.Model):
 
 
 class Goal(models.Model):
+    id = models.CharField(primary_key=True, default=uuid4, max_length=255)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="goals"
     )
