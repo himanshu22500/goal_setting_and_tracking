@@ -28,8 +28,8 @@ class Goal(models.Model):
         blank=True,
         related_name="goals",
     )
-    target_date = models.DateField()
-    due_date = models.DateField(blank=True, null=True)
+    target_datetime = models.DateTimeField()
+    due_datetime = models.DateTimeField(blank=True, null=True)
     completed = models.BooleanField(default=False)
     progress = models.PositiveIntegerField(default=0, blank=True, null=True)
     priority = models.PositiveIntegerField(

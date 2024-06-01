@@ -14,3 +14,13 @@ class UserLoginSerializer(serializers.Serializer):
 
 class UserLogoutSerializer(serializers.Serializer):
     access_token = serializers.CharField(max_length=255)
+
+
+class CreateGoalSerializer(serializers.Serializer):
+    title = serializers.CharField(max_length=255)
+    description = serializers.CharField(max_length=255, required=False)
+    category = serializers.CharField(max_length=255)
+    target_datetime = serializers.DateTimeField()
+    due_datetime = serializers.DateTimeField(required=False)
+    priority = serializers.IntegerField(required=False)
+    is_public = serializers.BooleanField(required=False)

@@ -47,8 +47,8 @@ class Migration(migrations.Migration):
                 ),
                 ("title", models.CharField(max_length=200)),
                 ("description", models.TextField(blank=True, null=True)),
-                ("target_date", models.DateField()),
-                ("due_date", models.DateField(blank=True, null=True)),
+                ("target_datetime", models.DateField()),
+                ("due_datetime", models.DateField(blank=True, null=True)),
                 ("completed", models.BooleanField(default=False)),
                 (
                     "progress",

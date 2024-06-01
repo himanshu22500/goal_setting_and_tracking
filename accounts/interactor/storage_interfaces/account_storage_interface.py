@@ -42,3 +42,7 @@ class AccountStorageInterface:
     @abstractmethod
     def delete_session_token(self, session_token: str):
         pass
+
+    @abstractmethod
+    def get_user_id_from_session_token(self, session_token: str):
+        pass

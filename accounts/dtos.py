@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+from datetime import datetime
+from typing import Optional
 
 
 @dataclass
@@ -17,4 +19,16 @@ class UserLoginParamsDTO:
 @dataclass
 class UserLoginSessionDTO:
     user_id: int
+    session_token: str
+
+
+@dataclass
+class CreateGoalParamsDTO:
+    title: str
+    description: Optional[str]
+    category: str
+    target_datetime: datetime
+    due_datetime: Optional[datetime]
+    priority: Optional[int]
+    is_public: Optional[bool]
     session_token: str

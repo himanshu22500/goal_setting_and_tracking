@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 
 from accounts.dtos import CreateUserParamsDTO
+from accounts.exceptions.exceptions import InvalidAccessToken
 from accounts.interactor.storage_interfaces.account_storage_interface import (
     AccountStorageInterface,
 )
@@ -54,3 +55,10 @@ class AccountStorage(AccountStorageInterface):
         session_token_obj = SessionToken.objects.filter(token=session_token)
         if session_token_obj.exists():
             session_token_obj.delete()
+
+    def get_user_id_from_session_token(self, session_token: str):
+        try:
+            session_token_obj = SessionToken.objects.get(token=session_token)
+            return session_token_obj.user.id
+        except SessionToken.DoesNotExist:
+            return InvalidAccessToken(access_token=session_token)
