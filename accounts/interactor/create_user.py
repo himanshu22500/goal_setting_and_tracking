@@ -1,5 +1,6 @@
 import re
 
+from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse
 
 from accounts.constants.constants import (
@@ -9,9 +10,11 @@ from accounts.constants.constants import (
 )
 from accounts.dtos import CreateUserParamsDTO
 from accounts.exceptions.exceptions import (
+    EmailAlreadyExists,
     InvalidEmail,
     InvalidPassword,
     InvalidUserName,
+    UserNameAlreadyExists,
 )
 from accounts.interactor.presenter_interfaces.presenter_interface import (
     PresenterInterface,
@@ -46,6 +49,14 @@ class CreateUserInteractor:
             return presenter.get_invalid_password_http_error(
                 password=create_user_params_dto.password
             )
+        except UserNameAlreadyExists:
+            return presenter.get_username_already_exists_http_error(
+                user_name=create_user_params_dto.user_name
+            )
+        except EmailAlreadyExists:
+            return presenter.get_email_already_exists_http_error(
+                email=create_user_params_dto.email
+            )
         else:
             return presenter.get_success_http_response_for_create_user()
 
@@ -53,12 +64,19 @@ class CreateUserInteractor:
         self._validate_creation_params(
             create_user_params_dto=create_user_params_dto
         )
+        create_user_params_dto.password = make_password(
+            create_user_params_dto.password
+        )
         self.account_storage.create_account_user(
             create_user_params_dto=create_user_params_dto
         )
 
-    @staticmethod
-    def validate_username(user_name: str):
+    def validate_username(self, user_name: str):
+        is_username_taken = self.account_storage.is_username_exists(
+            user_name=user_name
+        )
+        if is_username_taken:
+            raise UserNameAlreadyExists(user_name=user_name)
         is_valid = bool(re.match(USERNAME_REGEX, user_name))
         if not is_valid:
             raise InvalidUserName(user_name=user_name)
@@ -69,8 +87,14 @@ class CreateUserInteractor:
         if not is_valid:
             raise InvalidPassword(password=password)
 
-    @staticmethod
-    def validate_email(email: str):
+    def validate_email(self, email: str):
+        user_exists_with_email = self.account_storage.is_email_exists(
+            email=email
+        )
+
+        if user_exists_with_email:
+            raise EmailAlreadyExists(email=email)
+
         is_valid = bool(re.match(EMAIL_REGEX, email))
         if not is_valid:
             raise InvalidEmail(email=email)
