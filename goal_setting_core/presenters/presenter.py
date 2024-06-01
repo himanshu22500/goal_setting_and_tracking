@@ -34,7 +34,7 @@ class Presenter(PresenterInterface):
     ):
         response_dict = {
             "error": "Target datetime must be in the future.",
-            "category": target_datetime,
+            "target_datetime": str(target_datetime),
         }
         response_json = json.dumps(response_dict)
         return HttpResponse(
@@ -44,7 +44,7 @@ class Presenter(PresenterInterface):
     def get_invalid_due_datetime_http_error(self, due_datetime: datetime):
         response_dict = {
             "error": "Due datetime must be in the future.",
-            "category": due_datetime,
+            "due_datetime": str(due_datetime),
         }
         response_json = json.dumps(response_dict)
         return HttpResponse(

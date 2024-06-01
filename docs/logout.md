@@ -53,6 +53,6 @@ HTTP/1.1 400 Bad Request
 Content-Type: application/json
 
 {
-    "error": "Invalid session token"
+    "error": "invalid or expired access token"
 }
 ```

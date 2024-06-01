@@ -43,6 +43,8 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 ```
 
+### Response
+
 ```json
 {
   "access_token": "session_token"

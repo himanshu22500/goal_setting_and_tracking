@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+from dotenv import load_dotenv
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -75,10 +77,15 @@ WSGI_APPLICATION = "goal_setting_backend.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+load_dotenv()
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        "ENGINE": os.getenv("DB_ENGINE"),
+        "NAME": os.getenv("DB_NAME"),
+        "HOST": os.getenv("DB_HOST"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "PORT": os.getenv("DB_PORT"),
     }
 }
 

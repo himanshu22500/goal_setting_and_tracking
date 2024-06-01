@@ -41,3 +41,11 @@ Content-Type: application/json
     "password": "password123"
 }
 ```
+
+### Response
+
+```json
+{
+    "message": "User created successfully, login with username and password"
+}
+```

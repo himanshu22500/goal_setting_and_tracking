@@ -37,7 +37,7 @@ If there is an error, the response will have a status code of 400 and contain th
 ### Request
 
 ```json
-POST /goal/
+POST /goals/create
 Content-Type: application/json
 
 {
@@ -52,7 +52,8 @@ Content-Type: application/json
 }
 ```
 
-### Request
+### Response
+
 ```json
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -68,5 +69,11 @@ Content-Type: application/json
         "priority": 1,
         "is_public": true
     }
+}
+```
+```json
+{
+    "error": "Target datetime must be in the future.",
+    "target_datetime": "2024-06-01 16:08:32.762646"
 }
 ```
