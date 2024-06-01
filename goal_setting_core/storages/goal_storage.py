@@ -116,3 +116,11 @@ class GoalStorage(GoalStorageInterface):
             goal_update_obj.save()
         except ObjectDoesNotExist:
             GoalUpdate.objects.create(update_text=update_text)
+
+    def get_user_id_for_goal_id(self, goal_id: str) -> int:
+        try:
+            goal = Goal.objects.get(id=goal_id)
+        except ObjectDoesNotExist:
+            raise InvalidGoalId(goal_id=goal_id)
+
+        return goal.user.id

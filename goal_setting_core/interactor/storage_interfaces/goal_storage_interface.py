@@ -33,3 +33,7 @@ class GoalStorageInterface:
         self, update_goal_params_dto: UpdateGoalParamsDTO, goal_id: str
     ):
         pass
+
+    @abstractmethod
+    def get_user_id_for_goal_id(self, goal_id: str) -> int:
+        pass

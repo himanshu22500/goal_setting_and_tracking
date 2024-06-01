@@ -48,7 +48,9 @@ class Presenter(PresenterInterface):
         }
         response_json = json.dumps(response_dict)
         return HttpResponse(
-            response_json, content_type="application/json", status=400
+            response_json,
+            content_type="application/json",
+            status=status.HTTP_400_BAD_REQUEST,
         )
 
     def _get_goal_dict(self, goal_dto: GoalDTO):
@@ -76,7 +78,9 @@ class Presenter(PresenterInterface):
         }
         response_json = json.dumps(response_dict)
         return HttpResponse(
-            response_json, content_type="application/json", status=400
+            response_json,
+            content_type="application/json",
+            status=status.HTTP_200_OK,
         )
 
     def get_user_goals_http_response(self, goal_dtos: List[GoalDTO]):
@@ -86,7 +90,9 @@ class Presenter(PresenterInterface):
         }
         response_json = json.dumps(response_dict)
         return HttpResponse(
-            response_json, content_type="application/json", status=200
+            response_json,
+            content_type="application/json",
+            status=status.HTTP_200_OK,
         )
 
     def get_goal_http_response(self, goal_dto: GoalDTO):
@@ -104,12 +110,14 @@ class Presenter(PresenterInterface):
 
     def get_goal_not_found_http_error(self, goal_id: str):
         response_dict = {
-            "error": "goal_id doesn't exists",
+            "error": "goal_id not found",
             "goal_id": goal_id,
         }
         response_json = json.dumps(response_dict)
         return HttpResponse(
-            response_json, content_type="application/json", status=400
+            response_json,
+            content_type="application/json",
+            status=status.HTTP_400_BAD_REQUEST,
         )
 
     def get_goal_deleted_http_response(self, goal_id: str):
@@ -119,7 +127,9 @@ class Presenter(PresenterInterface):
         }
         response_json = json.dumps(response_dict)
         return HttpResponse(
-            response_json, content_type="application/json", status=400
+            response_json,
+            content_type="application/json",
+            status=status.HTTP_200_OK,
         )
 
     def get_invalid_access_token_http_error(self):

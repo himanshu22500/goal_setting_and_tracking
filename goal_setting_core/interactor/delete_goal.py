@@ -10,9 +10,10 @@ from goal_setting_core.interactor.presenter_interfaces.presenter_interface impor
 from goal_setting_core.interactor.storage_interfaces.goal_storage_interface import (
     GoalStorageInterface,
 )
+from goal_setting_core.interactor.validation_mixin import ValidationMixin
 
 
-class DeleteGoalInteractor:
+class DeleteGoalInteractor(ValidationMixin):
     def __init__(self, goal_storage: GoalStorageInterface):
         self.goal_storage = goal_storage
 
@@ -35,5 +36,7 @@ class DeleteGoalInteractor:
 
     def delete_goal(self, session_token: str, goal_id: str):
         user_id = self.account_service.get_user_id(session_token=session_token)
-        # todo : add cross account_goal validation
+        self.validate_goal_belongs_to_user(
+            user_id=user_id, goal_id=goal_id, goal_storage=self.goal_storage
+        )
         return self.goal_storage.delete_goal(goal_id=goal_id)
