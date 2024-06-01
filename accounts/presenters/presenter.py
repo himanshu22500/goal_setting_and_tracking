@@ -92,7 +92,7 @@ class Presenter(PresenterInterface):
         )
 
     def get_successful_login_attempt_http_error(self, session_token: str):
-        response_dict = {"access_token": session_token}
+        response_dict = {"session_token": session_token}
 
         response_json = json.dumps(response_dict)
         return HttpResponse(

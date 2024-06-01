@@ -36,7 +36,7 @@ class AccountStorageInterface:
         pass
 
     @abstractmethod
-    def is_access_token_valid(self, access_token: str):
+    def is_session_token_valid(self, session_token: str):
         pass
 
     @abstractmethod

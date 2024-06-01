@@ -24,3 +24,13 @@ class CreateGoalSerializer(serializers.Serializer):
     due_datetime = serializers.DateTimeField(required=False)
     priority = serializers.IntegerField()
     is_public = serializers.BooleanField()
+
+
+class UpdateGoalSerializer(serializers.Serializer):
+    title = serializers.CharField(max_length=255)
+    description = serializers.CharField(max_length=255, required=False)
+    category = serializers.CharField(max_length=255, required=False)
+    target_datetime = serializers.DateTimeField(required=False)
+    due_datetime = serializers.DateTimeField(required=False)
+    priority = serializers.IntegerField(required=False)
+    is_public = serializers.BooleanField(required=False)

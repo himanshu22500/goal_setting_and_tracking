@@ -26,8 +26,8 @@ class LogoutUserInteractor:
         self.validate_access_token(access_token=access_token)
 
     def validate_access_token(self, access_token: str):
-        is_valid_access_token = self.account_storage.is_access_token_valid(
-            access_token=access_token
+        is_valid_access_token = self.account_storage.is_session_token_valid(
+            session_token=access_token
         )
 
         if not is_valid_access_token:

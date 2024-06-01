@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from typing import List
 
-from accounts.dtos import CreateGoalParamsDTO
+from accounts.dtos import CreateGoalParamsDTO, UpdateGoalParamsDTO
 from goal_setting_core.interactor.storage_interfaces.dtos import GoalDTO
 
 
@@ -26,4 +26,10 @@ class GoalStorageInterface:
 
     @abstractmethod
     def delete_goal(self, goal_id: str):
+        pass
+
+    @abstractmethod
+    def update_goal(
+        self, update_goal_params_dto: UpdateGoalParamsDTO, goal_id: str
+    ):
         pass

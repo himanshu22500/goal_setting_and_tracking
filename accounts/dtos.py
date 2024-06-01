@@ -32,3 +32,17 @@ class CreateGoalParamsDTO:
     priority: Optional[int]
     is_public: Optional[bool]
     session_token: str
+
+
+@dataclass
+class UpdateGoalParamsDTO:
+    title: Optional[str]
+    description: Optional[str]
+    category: Optional[str]
+    target_datetime: Optional[datetime]
+    due_datetime: Optional[datetime]
+    completed: Optional[bool]
+    priority: Optional[int]
+    is_public: Optional[bool]
+    session_token: str
+    update_text: Optional[str]

@@ -48,8 +48,8 @@ class AccountStorage(AccountStorageInterface):
         )
         session_token_obj.save()
 
-    def is_access_token_valid(self, access_token: str):
-        return SessionToken.objects.filter(token=access_token).exists()
+    def is_session_token_valid(self, session_token: str):
+        return SessionToken.objects.filter(token=session_token).exists()
 
     def delete_session_token(self, session_token: str):
         session_token_obj = SessionToken.objects.filter(token=session_token)

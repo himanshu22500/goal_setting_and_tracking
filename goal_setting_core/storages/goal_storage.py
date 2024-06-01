@@ -2,13 +2,13 @@ from typing import List
 
 from django.core.exceptions import ObjectDoesNotExist
 
-from accounts.dtos import CreateGoalParamsDTO
+from accounts.dtos import CreateGoalParamsDTO, UpdateGoalParamsDTO
 from goal_setting_core.exceptions.exceptions import InvalidGoalId
 from goal_setting_core.interactor.storage_interfaces.dtos import GoalDTO
 from goal_setting_core.interactor.storage_interfaces.goal_storage_interface import (
     GoalStorageInterface,
 )
-from goal_setting_core.models.models import Category, Goal
+from goal_setting_core.models.models import Category, Goal, GoalUpdate
 
 
 class GoalStorage(GoalStorageInterface):
@@ -67,3 +67,52 @@ class GoalStorage(GoalStorageInterface):
             goal.delete()
         except ObjectDoesNotExist:
             raise InvalidGoalId(goal_id=goal_id)
+
+    def update_goal(
+        self, update_goal_params_dto: UpdateGoalParamsDTO, goal_id: str
+    ):
+        try:
+            goal = Goal.objects.get(id=goal_id)
+        except ObjectDoesNotExist:
+            raise InvalidGoalId(goal_id=goal_id)
+
+        if update_goal_params_dto.title:
+            goal.title = update_goal_params_dto.title
+
+        if update_goal_params_dto.target_datetime:
+            goal.target_datetime = update_goal_params_dto.target_datetime
+
+        if update_goal_params_dto.due_datetime:
+            goal.due_datetime = update_goal_params_dto.due_datetime
+
+        if update_goal_params_dto.category:
+            goal.category = update_goal_params_dto.category
+
+        if update_goal_params_dto.completed:
+            goal.completed = update_goal_params_dto.completed
+
+        if update_goal_params_dto.description:
+            goal.description = update_goal_params_dto.description
+
+        if update_goal_params_dto.is_public is not None:
+            goal.is_public = update_goal_params_dto.is_public
+
+        if update_goal_params_dto.priority:
+            goal.priority = update_goal_params_dto.priority
+
+        if update_goal_params_dto.update_text:
+            self.create_or_update_goal_update_text(
+                goal_id=goal_id, update_text=update_goal_params_dto.update_text
+            )
+
+        return self._get_goal_dto(goal=goal)
+
+    def create_or_update_goal_update_text(
+        self, goal_id: str, update_text: str
+    ):
+        try:
+            goal_update_obj = GoalUpdate.objects.get(goal__id=goal_id)
+            goal_update_obj.update_text = update_text
+            goal_update_obj.save()
+        except ObjectDoesNotExist:
+            GoalUpdate.objects.create(update_text=update_text)

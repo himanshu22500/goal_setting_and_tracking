@@ -31,7 +31,6 @@ class Goal(models.Model):
     target_datetime = models.DateTimeField()
     due_datetime = models.DateTimeField(blank=True, null=True)
     completed = models.BooleanField(default=False)
-    progress = models.PositiveIntegerField(default=0, blank=True, null=True)
     priority = models.PositiveIntegerField(
         choices=[(1, "Low"), (2, "Medium"), (3, "High")], default=2
     )

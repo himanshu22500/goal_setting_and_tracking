@@ -12,7 +12,7 @@ def logout(request):
     serializer = UserLogoutSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
 
-    access_token = serializer.validated_data["access_token"]
+    access_token = serializer.validated_data["session_token"]
 
     account_storage = AccountStorage()
     presenter = Presenter()

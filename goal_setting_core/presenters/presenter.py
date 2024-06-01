@@ -51,7 +51,7 @@ class Presenter(PresenterInterface):
             response_json, content_type="application/json", status=400
         )
 
-    def _get_goal_dict(self, goal_dto):
+    def _get_goal_dict(self, goal_dto: GoalDTO):
         return {
             "id": goal_dto.id,
             "title": goal_dto.title,

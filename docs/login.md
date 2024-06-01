@@ -45,7 +45,7 @@ Content-Type: application/json
 
 ```json
 {
-  "access_token": "access_token"
+  "access_token": "session_token"
 }
 ```
 
