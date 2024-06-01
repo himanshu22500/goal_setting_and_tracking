@@ -56,12 +56,15 @@ class Presenter(PresenterInterface):
     def _get_goal_dict(self, goal_dto: GoalDTO):
         return {
             "id": goal_dto.id,
+            "user_id": goal_dto.user_id,
             "title": goal_dto.title,
             "description": goal_dto.description,
+            "category": goal_dto.category,
             "target_datetime": goal_dto.target_datetime.isoformat(),
             "due_datetime": goal_dto.due_datetime.isoformat()
             if goal_dto.due_datetime
             else None,
+            "is_completed": goal_dto.is_completed,
             "priority": goal_dto.priority,
             "is_public": goal_dto.is_public,
         }

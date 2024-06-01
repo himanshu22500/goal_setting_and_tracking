@@ -41,10 +41,13 @@ class GoalStorage(GoalStorageInterface):
     def _get_goal_dto(goal):
         return GoalDTO(
             id=str(goal.id),
+            user_id=goal.user.id,
             title=goal.title,
             description=goal.description,
+            category=goal.category.name,
             target_datetime=goal.target_datetime,
             due_datetime=goal.due_datetime,
+            is_completed=goal.completed,
             priority=goal.priority,
             is_public=goal.is_public,
         )
