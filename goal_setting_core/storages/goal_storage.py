@@ -139,3 +139,8 @@ class GoalStorage(GoalStorageInterface):
             raise InvalidGoalId(goal_id=goal_id)
 
         return goal.user.id
+
+    def get_user_public_goals(self, user_id: int) -> List[GoalDTO]:
+        goal_objs = Goal.objects.filter(user__id=user_id, is_public=True)
+
+        return self._get_goal_dtos(goal_objs=goal_objs)

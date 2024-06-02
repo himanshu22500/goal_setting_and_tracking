@@ -37,3 +37,7 @@ class GoalStorageInterface:
     @abstractmethod
     def get_user_id_for_goal_id(self, goal_id: str) -> int:
         pass
+
+    @abstractmethod
+    def get_user_public_goals(self, user_id: int) -> List[GoalDTO]:
+        pass
